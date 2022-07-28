@@ -13,11 +13,17 @@ const app = express();
 
 const router = express.Router();
 
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 app.use(express.json());
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
+//------------------------------------------------------
+const port = process.env.PORT;
 //------------------------------------------------------
 
 let emails = {"emails": []};
@@ -43,7 +49,7 @@ fs.readFile(DATA_FILE_NAME, (err, data) => {
 
 const sendgrid = require('@sendgrid/mail');
 
-const SENDGRID_API_KEY = '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';
+const SENDGRID_API_KEY = process.env.TOKEN;
 
 const SENDER_EMAIL = 'super.gaponenko2000@gmail.com';
 
@@ -91,7 +97,7 @@ router.post('/sendEmails', asyncHandler(async (req, res) => {
 
 app.use('/api', router);
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('Server running on port 3000');
 });
 
