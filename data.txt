@@ -1,1 +1,1 @@
-{"emails":["vladyslav.haponenko@gmail.com"]}
+{"emails":[]}

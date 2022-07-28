@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
-const asyncHandler = require('express-async-handler')
+const asyncHandler = require('express-async-handler');
 
 const fs = require('fs');
 
@@ -13,7 +13,7 @@ const app = express();
 
 const router = express.Router();
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(bodyParser.json());
 
@@ -33,9 +33,10 @@ fs.access(DATA_FILE_NAME, fs.constants.F_OK, err => {
 
 fs.readFile(DATA_FILE_NAME, (err, data) => {
     if (!err) {
-        emails = JSON.parse(data)
+        emails = JSON.parse(data);
     }
 });
+
 
 
 //------------------------------------------------------
@@ -46,7 +47,7 @@ const SENDGRID_API_KEY = 'SG.3cFffor-REWY0g-K1MUuiA.rr-xAJ8hl1DoTG_lFjUaMSRqePLQ
 
 const SENDER_EMAIL = 'super.gaponenko2000@gmail.com';
 
-const SUBJECT = 'BTC rate'
+const SUBJECT = 'BTC rate';
 
 sendgrid.setApiKey(SENDGRID_API_KEY);
 
@@ -54,19 +55,18 @@ sendgrid.setApiKey(SENDGRID_API_KEY);
 
 
 router.get('/rate', asyncHandler(async (req, res, next) => {
-    let rate = 0
+    let rate = 0;
     try{
          rate = await requestRate();
     }catch(err){
         res.status(400).json();
-        return
     }
     res.status(200).json(rate);
 }));
 
 router.post('/subscribe', (req, res) => {
     const email = req.body.email;
-    const oldEmail = contain(emails.emails, email)
+    const oldEmail = contain(emails.emails, email);
     if (!oldEmail) {
         emails.emails.push(email);
         writeArray();
