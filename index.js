@@ -77,7 +77,12 @@ router.post('/subscribe', (req, res) => {
 });
 
 router.post('/sendEmails', asyncHandler(async (req, res) => {
-    const rate = await requestRate();
+    let rate = 0;
+    try{
+         rate = await requestRate();
+    }catch(err){
+        res.status(400).json();
+    }
     for (let i in emails.emails) {
         sendEmail(emails.emails[i], rate);
     }
